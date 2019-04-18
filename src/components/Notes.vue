@@ -8,11 +8,11 @@
             :key="index"
         >
             <div class="note-header" :class="{ full: !grid }">
-                <hidden-input :val="note.title" @changeVal="changeTitle(index,$event)"/>
+                <hidden-input :val="note.title" @changeVal="changeNote(index,$event, 'title')"/>
                 <p style="cursor: pointer;" @click="removeNote(index)">x</p>
             </div>
             <div class="note-body">
-                <hidden-text-area :val="note.descr" @changeVal="changeDescr(index, $event)"/>
+                <hidden-text-area :val="note.descr" @changeVal="changeNote(index, $event, 'descr')"/>
                 <span>{{note.date}}</span>
             </div>
 
@@ -44,14 +44,9 @@
       removeNote(index){
         this.$emit('removeNote',index);
       },
-      changeTitle(index, title){
+      changeNote(index, val, key) {
         let note = this.notes[index]
-        note.title = title
-        this.$emit('changeNote', index, note)
-      },
-      changeDescr(index, descr){
-        let note = this.notes[index]
-        note.descr = descr
+        note[key] = val
         this.$emit('changeNote', index, note)
       }
     }
